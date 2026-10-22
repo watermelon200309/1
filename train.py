@@ -1,38 +1,27 @@
-# -*- coding: utf-8 -*-
-"""
-地聚物混凝土 28d 抗压强度预测 —— 简单多层感知机(MLP)
+导入argparse
+导入os
+导入 pickle
+导入random
 
-数据来源:《固废煤矸石细集料地聚物混凝土基本性能研究》(李庆轩)
-特征为每立方米各组分用量(kg/m3)以及碱含量(%)、水玻璃模数。
+导入numpy并命名为np
+导入 pandas 作为 pd
+导入 torch
+导入torch.nn并命名为nn
+从sklearn.metrics导入mean_absolute_error、mean_squared_error、r2_score
+从sklearn.model_selection导入KFold
+从sklearn.preprocessing 导入 StandardScaler
 
-用法:
-    python train.py            # 使用默认数据训练并保存模型
-    python train.py --epochs 3000 --hidden 32 16
-"""
-import argparse
-import os
-import pickle
-import random
-
-import numpy as np
-import pandas as pd
-import torch
-import torch.nn as nn
-from sklearn.metrics import mean_absolute_error, mean_squared_error, r2_score
-from sklearn.model_selection import KFold
-from sklearn.preprocessing import StandardScaler
-
-import matplotlib
-matplotlib.use("Agg")
-import matplotlib.pyplot as plt
+导入 matplotlib
+matplotlib.使用("Agg")
+导入 matplotlib.pyplot 作为 plt
 
 # 输入特征(组分用量 + 碱含量 + 模数)与预测目标(28d抗压强度)
-FEATURES = ["GGBS", "FA", "water_glass", "NaOH", "coal_gangue",
-            "sand", "gravel", "water", "alkali_content", "modulus"]
-TARGET = "fc_28d"
+特征 = ["GGBS", "FA", "水玻璃", "NaOH", "煤矸石",
+            "砂", "砾石", "水", "碱含量", "模数"]
 
 
-def set_seed(seed=42):
+
+ set_seed(seed=42):
     """固定随机种子, 让结果可复现。"""
     random.seed(seed)
     np.random.seed(seed)
